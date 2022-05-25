@@ -1,5 +1,5 @@
+import UserData from "../../../entities/userData";
 import UserRepository from "../ports/userRepository";
-import UserData from "../userData";
 
 export default class InMemoryUserRepository implements UserRepository {
   constructor(private users: UserData[]) {}
