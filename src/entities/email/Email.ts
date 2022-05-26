@@ -1,12 +1,8 @@
-import { Either, left, right } from "../shared/Either";
-import InvalidEmailError from "./errors/invalidEmailError";
+import { Either, left, right } from "../../shared/Either";
+import InvalidEmailError from "../errors/InvalidEmailError";
 
 export default class Email {
-  private readonly email: string;
-
-  constructor(email: string) {
-    this.email = email;
-  }
+  private constructor(public readonly value: string) {}
 
   static validate(email: string): boolean {
     if (!email) return false;
@@ -36,7 +32,10 @@ export default class Email {
   }
 
   static create(email: string): Either<InvalidEmailError, Email> {
-    if (Email.validate(email)) return right(new Email(email));
-    return left(new InvalidEmailError());
+    if (!Email.validate(email)) {
+      return left(new InvalidEmailError());
+    }
+
+    return right(new Email(email));
   }
 }
