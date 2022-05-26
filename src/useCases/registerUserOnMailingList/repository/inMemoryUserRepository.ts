@@ -4,7 +4,7 @@ import UserRepository from "../ports/userRepository";
 export default class InMemoryUserRepository implements UserRepository {
   constructor(private users: UserData[]) {}
 
-  async add(user: UserData): Promise<void> {
+  async add(user: UserData): Promise<UserData> {
     const exists = await this.exists(user);
 
     if (exists) {
@@ -12,7 +12,8 @@ export default class InMemoryUserRepository implements UserRepository {
     }
 
     this.users.push(user);
-    return;
+
+    return user;
   }
 
   async findUserByEmail(email: string): Promise<UserData | null> {
